@@ -1,0 +1,44 @@
+<!-- Basic XML input file -->
+
+<beast version='2.7' namespace='phydyn.model:beast.base.util:beast.base.math:beast.base.evolution.alignment:beast.base.evolution.tree'>
+
+	<model spec='PopModelODE' id='themodel' evaluator="compiled"
+	     popParams='@initValues' modelParams='@rates'>
+		<definition spec='Definition'>N=I0+I1+I2+S</definition>
+		<matrixeq spec='MatrixEquation' type="birth" origin="I0" destination="I0"> (beta0*S*I0)/N  </matrixeq> 
+		<matrixeq spec='MatrixEquation' type="birth" origin="I1" destination="I0"> (beta1*S*I1)/N </matrixeq> 
+		<matrixeq spec='MatrixEquation' type="birth" origin="I2" destination="I0"> (beta2*S*I2)/N </matrixeq> 
+		<matrixeq spec='MatrixEquation' type="migration" origin="I0" destination="I1"> gamma0*I0 </matrixeq> 
+		<matrixeq spec='MatrixEquation' type="migration" origin="I1" destination="I2"> gamma1*I1 </matrixeq> 
+		<matrixeq spec='MatrixEquation' type="death" origin="I0"> mu*I0 </matrixeq> 
+		<matrixeq spec='MatrixEquation' type="death" origin="I1"> mu*I1 </matrixeq> 
+		<matrixeq spec='MatrixEquation' type="death" origin="I2"> mu*I2+gamma2*I2 </matrixeq> 
+		<matrixeq spec='MatrixEquation' type="nondeme" origin="S"> 
+			mu*N - mu*S - (beta0*I0+ beta1*I1 + beta2*I2)*S/N
+		</matrixeq>
+	</model>
+	
+	<rates spec="ModelParameters" id='rates'>	
+	  <param spec='ParamValue' pname='b' pvalue='0.036'></param>
+	  <param spec='ParamValue' pname='mu' pvalue='0.0333'></param>
+	  <param spec='ParamValue' pname='beta0' pvalue='1.2'></param>
+	  <param spec='ParamValue' pname='beta1' pvalue='0.03'></param>
+	  <param spec='ParamValue' pname='beta2' pvalue='0.09'></param>
+	  <param spec='ParamValue' pname='gamma0' pvalue='1'></param>
+	  <param spec='ParamValue' pname='gamma1' pvalue='0.1428'></param>
+	  <param spec='ParamValue' pname='gamma2' pvalue='0.64'></param>
+	</rates>	
+
+			
+	<trajparams id='initValues' spec='TrajectoryParameters' method="classicrk" 
+	            integrationSteps="1001"  t0="0" t1="50">
+	  <initialValue spec="ParamValue" pname='I0' pvalue='1'  />
+	  <initialValue spec="ParamValue" pname='I1' pvalue='0.01'  />
+	  <initialValue spec="ParamValue" pname='I2' pvalue='0.01' />
+	  <initialValue spec="ParamValue" pname='S' pvalue='3000.0' />
+	</trajparams>
+	
+	
+    <run spec='TrajectoryOut' model='@themodel' file="trajSIR3.csv">   </run>
+    
+</beast>

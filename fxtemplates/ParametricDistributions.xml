@@ -1,0 +1,151 @@
+<beast version='2.0'
+       namespace='beastfx.app.beauti:beast.pkgmgmt:beast.base.core:beast.base.inference:beast.base.evolution.branchratemodel:beast.base.evolution.speciation:beast.base.evolution.tree.coalescent:beast.base.util:beast.base.math:beast.evolution.nuc:beast.base.evolution.operator:beast.base.inference.operator:beast.base.evolution.sitemodel:beast.base.evolution.substitutionmodel:beast.base.evolution.likelihood:beast.evolution:beast.base.inference.distribution'>
+
+
+    <mergewith point='parametricDistributions'>
+        <!-- Parametric distributions, all without hyperpriors -->
+
+        <!-- Uniform -->
+        <subtemplate id='Uniform' class='beast.base.inference.distribution.Uniform' mainid='[top]'
+            hmc='
+            Uniform/GammaShape/=ParametricDistributions/Uniform/GammaShape/,
+            Uniform/offset/=ParametricDistributions/Uniform/offset/,
+            Uniform/upper/=ParametricDistributions/Uniform/upper/'>
+            <![CDATA[
+        <distr spec="beast.base.inference.distribution.Uniform" lower='0' upper='Infinity'/>
+]]>
+        </subtemplate>
+
+        <!-- Normal -->
+        <subtemplate id='Normal' class='beast.base.inference.distribution.Normal' mainid='[top]' suppressInputs='beast.base.inference.distribution.Normal.tau'
+            hmc='
+			Normal/mean/=ParametricDistributions/Normal/mean/,
+			Normal/sigma/=ParametricDistributions/Normal/sigma/,
+			Normal/offset/=ParametricDistributions/Normal/offset/'>
+            <![CDATA[
+    <distr offset="0.0" spec="beast.base.inference.distribution.Normal">
+        <parameter name='mean' value='0' estimate='false'/>
+        <parameter name='sigma' value='1' estimate='false'/>
+    </distr>
+]]>
+        </subtemplate>
+
+        <!-- OneOnX -->
+        <subtemplate id='1/X' class='beast.base.inference.distribution.OneOnX' mainid='[top]' 
+        	hmc='OneOnX/offset/=ParametricDistributions/OneOnX/offset/'>
+            <![CDATA[
+        <distr spec="beast.base.inference.distribution.OneOnX"/>
+]]>
+        </subtemplate>
+
+        <!-- lognormal -->
+        <subtemplate id='LogNormal' class='beast.base.inference.distribution.LogNormalDistributionModel' mainid='[top]'
+            hmc='
+			LogNormalDistributionModel/M/=ParametricDistributions/LogNormalDistributionModel/M/,
+			LogNormalDistributionModel/offset/=ParametricDistributions/LogNormalDistributionModel/offset/,
+			LogNormalDistributionModel/S/=ParametricDistributions/LogNormalDistributionModel/S/,
+			LogNormalDistributionModel/meanInRealSpace/=ParametricDistributions/LogNormalDistributionModel/meanInRealSpace/'>
+            <![CDATA[
+        <distr name='distr' spec="beast.base.inference.distribution.LogNormalDistributionModel">
+            <parameter name='M' value="1" estimate='false'/>
+            <parameter name='S' value="1.25" lower="0" upper="5" estimate='false'/>
+        </distr>
+]]>
+        </subtemplate>
+
+        <!-- Exponential -->
+        <subtemplate id='Exponential' class='beast.base.inference.distribution.Exponential' mainid='[top]'
+            hmc='
+            Exponential/mean/=ParametricDistributions/Exponential/mean/,
+            Exponential/offset/=ParametricDistributions/Exponential/offset/'>
+            <![CDATA[
+        <distr offset="0.0" spec="beast.base.inference.distribution.Exponential">
+            <parameter name='mean' value="1" estimate='false'/>
+        </distr>
+]]>
+        </subtemplate>
+
+        <!-- Gamma -->
+        <subtemplate id='Gamma' class='beast.base.inference.distribution.Gamma' mainid='[top]'
+            hmc='
+			Gamma/beta/=ParametricDistributions/Gamma/beta/,
+			Gamma/alpha/=ParametricDistributions/Gamma/alpha/,
+			Gamma/mode/=ParametricDistributions/Gamma/mode/,
+			Gamma/offset/=ParametricDistributions/Gamma/offset/'>
+            <![CDATA[
+        <distr offset="0.0" spec="beast.base.inference.distribution.Gamma">
+            <parameter name='alpha' value="2" estimate='false'/>
+            <parameter name='beta' value="2" estimate='false'/>
+        </distr>
+]]>
+        </subtemplate>
+
+        <!-- Beta -->
+        <subtemplate id='Beta' class='beast.base.inference.distribution.Beta' mainid='[top]'
+            hmc='
+			Beta/beta/=ParametricDistributions/Beta/beta/,
+			Beta/alpha/=ParametricDistributions/Beta/alpha/,
+				Beta/offset/=ParametricDistributions/Beta/offset/'>
+            <![CDATA[
+        <distr offset="0.0" spec="beast.base.inference.distribution.Beta">
+            <parameter name='alpha' value="2" estimate='false'/>
+            <parameter name='beta' value="2" estimate='false'/>
+        </distr>
+]]>
+        </subtemplate>
+
+        <!-- Laplace -->
+        <subtemplate id='LaplaceDistribution' class='beast.base.inference.distribution.LaplaceDistribution' mainid='[top]'
+            hmc='
+			LaplaceDistribution/lambda/=ParametricDistributions/LaplaceDistribution/lambda//mu/,
+			LaplaceDistribution/offset/=ParametricDistributions/LaplaceDistribution/offset/,
+			LaplaceDistribution/scale/=ParametricDistributions/LaplaceDistribution/scale/'>
+            <![CDATA[
+        <distr offset="0.0" spec="beast.base.inference.distribution.LaplaceDistribution">
+            <parameter name='mu' value="0" estimate='false'/>
+            <parameter name='scale' value="1" estimate='false'/>
+        </distr>
+]]>
+        </subtemplate>
+
+        <!-- InverseGamma -->
+        <subtemplate id='InverseGamma' class='beast.base.inference.distribution.InverseGamma' mainid='[top]'
+            hmc='
+			InverseGamma/beta/=ParametricDistributions/InverseGamma/beta/,
+			InverseGamma/alpha/=ParametricDistributions/InverseGamma/alpha/,
+			InverseGamma/offset/=ParametricDistributions/InverseGamma/offset/'>
+            <![CDATA[
+        <distr offset="0.0" spec="beast.base.inference.distribution.InverseGamma">
+            <parameter name='alpha' value="2" estimate='false'/>
+            <parameter name='beta' value="2" estimate='false'/>
+        </distr>
+]]>
+        </subtemplate>
+
+        <!-- Poisson -->
+        <subtemplate id='Poisson' class='beast.base.inference.distribution.Poisson' mainid='[top]'
+            hmc='
+            Poisson/lambda/=ParametricDistributions/Poisson/lambda/,
+            Poisson/offset/=ParametricDistributions/Poisson/offset/'>
+            <![CDATA[
+		<distr spec='beast.base.inference.distribution.Poisson' offset="0.0">
+			<parameter name="lambda" value="0.693"/>
+		</distr>
+]]>
+        </subtemplate>
+
+        <!-- Dirichlet -->
+        <subtemplate id='Dirichlet' class='beast.base.inference.distribution.Dirichlet' mainid='[top]'
+            hmc='
+            Dirichlet/alpha/=ParametricDistributions/Dirichlet/mean/,
+            Dirichlet/offset/=ParametricDistributions/Dirichlet/offset/'>
+            <![CDATA[
+			<distr spec="beast.base.inference.distribution.Dirichlet" offset="0.0">
+                <parameter spec="parameter.RealParameter" estimate="false" name="alpha">1.0</parameter>
+            </distr> 
+]]>
+        </subtemplate>
+    </mergewith>
+
+
+</beast>
