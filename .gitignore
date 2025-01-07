@@ -1,9 +1,6 @@
 # Compiled class file
 *.class
 
-# Log file
-*.log
-
 # BlueJ files
 *.ctxt
 
@@ -24,3 +21,4 @@ hs_err_pid*
 replay_pid*
 
 beast
+beast2.sif
